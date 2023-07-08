@@ -46,10 +46,16 @@ func _target_timer_timeout() -> void:
 
 func _get_duck() -> void:
 	_duck = get_tree().get_first_node_in_group("ducks") as Duck
-	_target_pos = _duck.position
 
 
 func _set_target_pos() -> void:
+	if _duck == null:
+		_get_duck()
+		if _duck == null:
+			_target_pos = position
+			velocity = Vector2.ZERO
+			return
+		
 	if _duck.velocity == Vector2.ZERO:
 		_target_pos = _duck.position
 		velocity = position.direction_to(_target_pos) * speed

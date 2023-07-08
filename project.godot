@@ -66,6 +66,7 @@ esc={
 2d_physics/layer_1="Ducks"
 2d_physics/layer_2="Reticle"
 2d_physics/layer_3="Wall"
+2d_physics/layer_4="BottomWall"
 
 [rendering]
 

@@ -1,13 +1,40 @@
 extends CharacterBody2D
 class_name Duck
 
+enum State {FLYING_IN, FLYING, FLYING_OUT}
+
 @export var vel := Vector2.RIGHT
 @export var speed := 100.0
 
+var state := State.FLYING_IN
+
 func _ready():
-	velocity = vel * speed
+	Events.duck_fly_out.connect(_fly_out)
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_flew_out)
 
 
 func _physics_process(_delta):
-	velocity = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down")).normalized() * speed
+	
+	var input := Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_up", "move_down"))
+	
+	if state == State.FLYING_IN or state == State.FLYING_OUT:
+		input.y = -1
+	
+	if state == State.FLYING_IN and position.y < 128:
+		Events.duck_flew_in.emit()
+		set_collision_mask_value(4, true)
+		state = State.FLYING
+			
+	
+	velocity = input.normalized() * speed
 	move_and_slide()
+
+
+func _fly_out() -> void:
+	state = State.FLYING_OUT
+	set_collision_mask_value(3, false)
+
+
+func _flew_out() -> void:
+	Events.duck_flew_out.emit()
+	queue_free()

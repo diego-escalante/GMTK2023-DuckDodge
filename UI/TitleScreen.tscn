@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbkhe0c0rvry6"]
+[gd_scene load_steps=8 format=3 uid="uid://dbkhe0c0rvry6"]
 
 [ext_resource type="Script" path="res://UI/TitleScreen.gd" id="1_cl4nr"]
 [ext_resource type="FontFile" uid="uid://sewm6bd7fb00" path="res://Theme/Font/golem-script/golem-script.ttf" id="1_im6pg"]
 [ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="2_f10jr"]
 [ext_resource type="Script" path="res://Utils/Flash.gd" id="3_qjie1"]
+[ext_resource type="Shader" path="res://crt.gdshader" id="5_6mqx5"]
+[ext_resource type="Script" path="res://UI/TopScoreLabel.gd" id="5_k5a62"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e585s"]
+shader = ExtResource("5_6mqx5")
+shader_parameter/scanline_count = 125.0
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -51,7 +57,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_colors/font_color = Color(0, 0.835294, 0.870588, 1)
+theme_override_colors/font_color = Color(0.27451, 0.588235, 1, 1)
 theme_override_fonts/font = ExtResource("1_im6pg")
 theme_override_font_sizes/font_size = 63
 text = "  Duck  "
@@ -60,7 +66,7 @@ vertical_alignment = 2
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0, 0.835294, 0.870588, 1)
+theme_override_colors/font_color = Color(0.27451, 0.588235, 1, 1)
 theme_override_fonts/font = ExtResource("1_im6pg")
 theme_override_font_sizes/font_size = 63
 text = "  Dodge"
@@ -82,18 +88,15 @@ text = "Press Any Key To START"
 horizontal_alignment = 1
 script = ExtResource("3_qjie1")
 
-[node name="Label7" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_f10jr")
-theme_override_colors/font_color = Color(0, 0.835294, 0.870588, 1)
-horizontal_alignment = 1
-
 [node name="Label6" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_f10jr")
-theme_override_colors/font_color = Color(0, 0.835294, 0.870588, 1)
-text = "Top Score: 00"
+theme_override_colors/font_color = Color(0.27451, 0.588235, 1, 1)
+text = "Top Score: X
+Highest Round: X
+"
 horizontal_alignment = 1
+script = ExtResource("5_k5a62")
 
 [node name="Label4" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -102,3 +105,16 @@ theme_override_colors/font_color = Color(0.32549, 0.32549, 0.32549, 1)
 text = "Created By Diego Escalante in
 48 hours for the 2023 GMTK Jam"
 horizontal_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(128, 120)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer"]
+material = SubResource("ShaderMaterial_e585s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

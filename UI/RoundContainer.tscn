@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7vc8x8uu0q1q"]
+[gd_scene load_steps=3 format=3 uid="uid://b7vc8x8uu0q1q"]
 
 [ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="1_bit7u"]
+[ext_resource type="Script" path="res://UI/RoundContainer.gd" id="2_h48ls"]
 
 [node name="RoundContainer" type="PanelContainer"]
 anchors_preset = -1
@@ -13,6 +14,7 @@ grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_bit7u")
+script = ExtResource("2_h48ls")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

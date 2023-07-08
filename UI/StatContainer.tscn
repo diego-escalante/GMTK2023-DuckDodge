@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv4vj2jqv43s1"]
+[gd_scene load_steps=3 format=3 uid="uid://bv4vj2jqv43s1"]
 
 [ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="1_tvim1"]
+[ext_resource type="Script" path="res://UI/StatContainer.gd" id="2_ojkla"]
 
 [node name="StatContainer" type="PanelContainer"]
 anchors_preset = -1
@@ -11,6 +12,7 @@ offset_bottom = 0.0799999
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_tvim1")
+script = ExtResource("2_ojkla")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

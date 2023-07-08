@@ -73,5 +73,5 @@ func _switch_to_title_screen() -> void:
 
 func _spawn_duck() -> void:
 	var new_duck := duck_scene.instantiate()
-	get_tree().root.add_child(new_duck)
+	owner.add_child(new_duck)
 	new_duck.position = Vector2(randi_range(48, 224), 160)

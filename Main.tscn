@@ -7,23 +7,23 @@
 [node name="Main" type="Node"]
 
 [node name="Duck" parent="." instance=ExtResource("2_bup2h")]
-position = Vector2(347, 298)
+position = Vector2(32, 32)
 
 [node name="StaticBody2D" parent="." instance=ExtResource("2_vmk6a")]
-position = Vector2(-1, 343)
-scale = Vector2(1, 40)
+position = Vector2(-16, 120)
+scale = Vector2(1, 7.5)
 
 [node name="StaticBody2D2" parent="." instance=ExtResource("2_vmk6a")]
-position = Vector2(1280, 354)
-scale = Vector2(1, 40)
+position = Vector2(272, 120)
+scale = Vector2(1, 7.5)
 
 [node name="StaticBody2D3" parent="." instance=ExtResource("2_vmk6a")]
-position = Vector2(668, 0)
-scale = Vector2(80, 1)
+position = Vector2(128, -16)
+scale = Vector2(8, 1)
 
 [node name="StaticBody2D4" parent="." instance=ExtResource("2_vmk6a")]
-position = Vector2(667, 720)
-scale = Vector2(80, 1)
+position = Vector2(128, 256)
+scale = Vector2(8, 1)
 
 [node name="Reticle" parent="." instance=ExtResource("3_d1p5t")]
-position = Vector2(1101, 639)
+position = Vector2(192, 192)

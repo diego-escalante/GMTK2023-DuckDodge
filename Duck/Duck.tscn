@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm13p"]
-size = Vector2(128, 128)
+size = Vector2(32, 32)
 
 [node name="Duck" type="CharacterBody2D" groups=["ducks"]]
 collision_mask = 4
@@ -24,6 +24,7 @@ script = ExtResource("2_tv0cu")
 speed = 99.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_j5jx1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

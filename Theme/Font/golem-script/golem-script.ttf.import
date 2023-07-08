@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dic35oc518qk0"
-path="res://.godot/imported/PressStart2P-Regular.ttf-a795214d87a6c62b3a7e0b1a9724e355.fontdata"
+uid="uid://sewm6bd7fb00"
+path="res://.godot/imported/golem-script.ttf-47173640c5718580e4c262738842e83d.fontdata"
 
 [deps]
 
-source_file="res://Theme/Font/PressStart2P-Regular.ttf"
-dest_files=["res://.godot/imported/PressStart2P-Regular.ttf-a795214d87a6c62b3a7e0b1a9724e355.fontdata"]
+source_file="res://Theme/Font/golem-script/golem-script.ttf"
+dest_files=["res://.godot/imported/golem-script.ttf-47173640c5718580e4c262738842e83d.fontdata"]
 
 [params]
 

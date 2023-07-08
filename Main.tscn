@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://blklk4noolhqp" path="res://Duck/Duck.tscn" id="2_bup2h"]
 [ext_resource type="PackedScene" uid="uid://55eliuohw4nm" path="res://Wall.tscn" id="2_vmk6a"]
-[ext_resource type="PackedScene" uid="uid://cl78xnnsffh8u" path="res://Reticle.tscn" id="3_d1p5t"]
+[ext_resource type="PackedScene" uid="uid://cl78xnnsffh8u" path="res://Reticle/Reticle.tscn" id="3_d1p5t"]
 [ext_resource type="PackedScene" uid="uid://cx18fmer17pwl" path="res://UI/UI.tscn" id="4_u7oqb"]
 [ext_resource type="PackedScene" uid="uid://b7vc8x8uu0q1q" path="res://UI/RoundContainer.tscn" id="5_34rh1"]
 
@@ -37,16 +37,19 @@ position = Vector2(128, 176)
 scale = Vector2(8, 1)
 
 [node name="UI" parent="." instance=ExtResource("4_u7oqb")]
-offset_left = 16.0
+anchors_preset = 15
+anchor_bottom = 1.0
 offset_top = 192.0
-offset_right = 16.0
-offset_bottom = 192.08
+offset_bottom = 0.0
 
 [node name="RoundContainer" parent="UI" instance=ExtResource("5_34rh1")]
 layout_mode = 1
-offset_left = 80.0
-offset_top = -160.0
-offset_right = 102.112
-offset_bottom = -130.544
+anchor_left = 0.375
+anchor_top = -3.333
+anchor_right = 0.66
+anchor_bottom = -2.625
+offset_top = -0.0159912
+offset_right = 0.0399933
+offset_bottom = 1.52588e-05
 grow_horizontal = 1
 grow_vertical = 1

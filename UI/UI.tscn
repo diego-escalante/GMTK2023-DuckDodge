@@ -6,17 +6,25 @@
 
 [node name="UI" type="Control"]
 layout_mode = 3
-anchor_right = 0.875
+anchor_right = 1.0
 anchor_bottom = 0.133
-offset_right = -1.52588e-05
 offset_bottom = 0.0799999
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 224.0
-offset_bottom = 32.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.0
+offset_top = -15.0
+offset_right = 122.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="StatContainer" parent="HBoxContainer" instance=ExtResource("3_xpqsl")]
 layout_mode = 2

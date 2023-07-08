@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7vc8x8uu0q1q"]
+
+[ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="1_bit7u"]
+
+[node name="RoundContainer" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.187
+anchor_bottom = 0.142
+offset_right = 0.127998
+offset_bottom = -0.0800018
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_bit7u")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Round" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_spacing = 6
+text = "ROUND"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Number" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_spacing = 6
+text = "1"
+horizontal_alignment = 1

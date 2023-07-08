@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3txi8obv85f1"]
+
+[ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="1_ypin8"]
+
+[node name="GoalContainer" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.281
+anchor_bottom = 0.133
+offset_right = 0.0639954
+offset_bottom = 0.0799999
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ypin8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Labels" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Saved" type="Label" parent="MarginContainer/HBoxContainer/Labels"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SAVED:"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Current" type="Label" parent="MarginContainer/HBoxContainer/Labels"]
+layout_mode = 2
+text = "REQ:"
+horizontal_alignment = 2
+
+[node name="Numbers" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SavedNumber" type="Label" parent="MarginContainer/HBoxContainer/Numbers"]
+layout_mode = 2
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="CurrentNumber" type="Label" parent="MarginContainer/HBoxContainer/Numbers"]
+layout_mode = 2
+text = "00"
+horizontal_alignment = 2

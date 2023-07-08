@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://brn6w6d4124th"]
+
+[ext_resource type="FontFile" uid="uid://dic35oc518qk0" path="res://Theme/Font/PressStart2P-Regular.ttf" id="1_o16bn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_713om"]
+content_margin_left = 1.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource("1_o16bn")
+default_font_size = 8
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_713om")

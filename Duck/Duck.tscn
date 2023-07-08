@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://blklk4noolhqp"]
+
+[ext_resource type="Texture2D" uid="uid://b21kuwkmeay40" path="res://icon.svg" id="1_kht0q"]
+[ext_resource type="Script" path="res://Duck/Duck.gd" id="2_tv0cu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j5jx1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kht0q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm13p"]
+size = Vector2(128, 128)
+
+[node name="Duck" type="CharacterBody2D" groups=["ducks"]]
+collision_mask = 4
+motion_mode = 1
+script = ExtResource("2_tv0cu")
+speed = 99.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_j5jx1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cm13p")

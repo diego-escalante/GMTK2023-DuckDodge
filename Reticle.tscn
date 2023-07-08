@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl78xnnsffh8u"]
+
+[ext_resource type="Script" path="res://Reticle.gd" id="1_p4rrm"]
+[ext_resource type="Texture2D" uid="uid://b21kuwkmeay40" path="res://icon.svg" id="1_topmk"]
+[ext_resource type="Script" path="res://TimerWithRandomRange.gd" id="3_3yqv6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ukm7"]
+radius = 17.1172
+
+[node name="Reticle" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 4
+motion_mode = 1
+script = ExtResource("1_p4rrm")
+speed = 125.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_topmk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2ukm7")
+
+[node name="SetTargetTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("3_3yqv6")

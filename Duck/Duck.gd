@@ -6,6 +6,8 @@ enum State {FLYING_IN, FLYING, FLYING_OUT}
 @export var vel := Vector2.RIGHT
 @export var speed := 100.0
 
+@onready var animated_sprite := $AnimatedSprite2D as AnimatedSprite2D
+
 var state := State.FLYING_IN
 
 func _ready():
@@ -27,6 +29,17 @@ func _physics_process(_delta):
 			
 	
 	velocity = input.normalized() * speed
+	
+	if velocity.x != 0:
+		animated_sprite.flip_h = velocity.x < 0
+	
+	if velocity.y < 0 && velocity.x != 0:
+		animated_sprite.set_animation("diagonal")
+	elif velocity.y < 0 && velocity.x == 0:
+		animated_sprite.set_animation("up")
+	elif velocity.x != 0 || velocity.y > 0:
+		animated_sprite.set_animation("side")
+
 	move_and_slide()
 
 

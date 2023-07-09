@@ -21,12 +21,9 @@ extends CharacterBody2D
 #  * Shoot cooldown: How quickly can the reticle attempt to shoot after a previous attempt? CD decreases over rounds. 
 #  * accuracy 0-1: Low accuracy means shooting outside of the duck's area and not shooting inside the duck's area when it is able to make an attempt. Think about it as a roll to see if it happens. 
 
-@export var speed := 20.0						# The speed of the target.
-@export var speed_delta := 10.0					# How much can the speed vary?
+@export var speed := 112.0						# The speed of the target.
 @export var set_target_interval := 0.5			# How often should a new target be chosen?
-@export var set_target_inverval_delta := 0.2 	# How much can the interval to chose a new target vary?
 @export var target_radius := 128				# How far can the target position be from the optimal desired position?
-@export var target_hit_distance := 16			# How close to the duck in order to hit it with a shot?
 @export var shoot_radius := 128					# How close to the duck before attempting to shoot? (Not guaranteed to be ON the duck)
 @export var shoot_accuracy := 0.75				# How likely is a shot to land? How likely is there a missed chance for a shot?
 @export var shoot_interval := 0.5				# How often should we attempt to shoot?
@@ -43,6 +40,7 @@ extends CharacterBody2D
 var _duck: Duck
 var _target_pos: Vector2
 var _current_speed := speed
+var target_hit_distance := 24			# How close to the duck in order to hit it with a shot?
 
 enum TargetLogic {NONE, RANDOM, CURRENT, PREDICTED}
 
@@ -66,15 +64,28 @@ func _choose_target_logic() -> TargetLogic:
 func _ready() -> void:
 	_target_pos = position
 	
+	Events.round_start.connect(_set_config)
 	Events.duck_flew_in.connect(_start)
 	Events.duck_fly_out.connect(_stop)
 	
 	shoot_timer.timeout.connect(_shoot)
 	set_target_timer.timeout.connect(_target_timer_timeout)
 	
-	await get_tree().root.ready
-	set_target_timer.set_new_wait_time(set_target_interval, set_target_inverval_delta)
-	shoot_timer.wait_time = shoot_interval
+	_stop()
+	
+	
+func _set_config(round_num: int, _a, _b) -> void:
+	speed = remap(round_num, -3, 8, 128, 168)
+	set_target_interval = max(remap(round_num, -3, 8, 1, 0.02), 0.02)
+	target_radius = max(remap(round_num, -3, 8, 64, 0), 0)
+	shoot_accuracy = min(remap(round_num, -3, 8, 0.4, 0.7), 1)
+	shoot_radius = max(remap(round_num, -3, 8, 64, 24), 0)
+	shoot_interval = max(remap(round_num, -3, 8, 1.5, 0.1), 0.05)
+	
+	no_new_target_position_weight = max(remap(round_num, -3, 8, 2, 0.5), 0)
+	random_target_position_weight = max(remap(round_num, -3, 8, 3, 1), 0)
+	current_target_position_weight = max(remap(round_num, -3, 8, 2, 1), 0)
+	predicted_target_position_weight = remap(round_num, -3, 8, 1, 2)
 
 
 func _start() -> void:
@@ -83,7 +94,9 @@ func _start() -> void:
 	position = Vector2(128, 160)
 	visible = true
 	_set_target_pos()
+	shoot_timer.wait_time = shoot_interval
 	shoot_timer.start()
+	set_target_timer.set_new_wait_time(set_target_interval, set_target_interval * 0.1)
 	set_target_timer.start()
 
 func _stop() -> void:
@@ -120,7 +133,7 @@ func _shoot() -> void:
 
 
 func _set_target_pos() -> void:
-	_current_speed = speed + randf_range(-speed_delta, speed_delta)
+	_current_speed = speed + randf_range(-speed * 0.2, speed * 0.2)
 	
 	# Choose a targeting strategy
 	var targeting_logic := _choose_target_logic()

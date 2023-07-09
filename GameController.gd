@@ -3,7 +3,7 @@ extends Node
 enum State {ROUND_START, DUCK_FLY_IN, DUCK_FLYING, DUCK_SHOT, DUCK_FLY_OUT, ROUND_END}
 
 @export var round_start_duration := 1.0
-@export var duck_flying_time := 3.0
+@export var duck_flying_time := 5.0
 @export var pause_duration := 1.0
 
 var current_round := 0

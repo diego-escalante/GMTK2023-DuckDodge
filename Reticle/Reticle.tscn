@@ -14,7 +14,7 @@ collision_layer = 2
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_lgvfm")
-speed = 125.0
+shoot_radius = 64
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_63soi")

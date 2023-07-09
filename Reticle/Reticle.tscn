@@ -23,5 +23,7 @@ texture = ExtResource("2_63soi")
 shape = SubResource("CircleShape2D_2ukm7")
 
 [node name="SetTargetTimer" type="Timer" parent="."]
-autostart = true
 script = ExtResource("3_ersjx")
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.1

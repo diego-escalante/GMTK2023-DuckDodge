@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://ck4x6i2jv6qa7"]
+[gd_scene load_steps=13 format=3 uid="uid://ck4x6i2jv6qa7"]
 
+[ext_resource type="Script" path="res://ShotFlash.gd" id="1_mmmwj"]
 [ext_resource type="PackedScene" uid="uid://55eliuohw4nm" path="res://Wall.tscn" id="2_vmk6a"]
 [ext_resource type="PackedScene" uid="uid://cl78xnnsffh8u" path="res://Reticle/Reticle.tscn" id="3_d1p5t"]
 [ext_resource type="PackedScene" uid="uid://cx18fmer17pwl" path="res://UI/UI.tscn" id="4_u7oqb"]
 [ext_resource type="PackedScene" uid="uid://b7vc8x8uu0q1q" path="res://UI/RoundContainer.tscn" id="5_34rh1"]
 [ext_resource type="Shader" path="res://crt.gdshader" id="6_2vmvu"]
+[ext_resource type="PackedScene" uid="uid://180olvqmq7yb" path="res://UI/MessageContainer.tscn" id="6_vg687"]
 [ext_resource type="Script" path="res://GameController.gd" id="7_87t8i"]
 [ext_resource type="Texture2D" uid="uid://bgfd54pjo6djx" path="res://tree.png" id="7_uvm6e"]
 [ext_resource type="Texture2D" uid="uid://dbhdy0l2ai7e7" path="res://bush.png" id="8_b438l"]
@@ -15,6 +17,24 @@ shader = ExtResource("6_2vmvu")
 shader_parameter/scanline_count = 790.0
 
 [node name="Main" type="Node"]
+
+[node name="ShotFlash" type="CanvasLayer" parent="."]
+script = ExtResource("1_mmmwj")
+
+[node name="BlackScreen" type="ColorRect" parent="ShotFlash"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="DuckFlash" type="ColorRect" parent="ShotFlash"]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(1, 1, 1, 0.752941)
 
 [node name="Reticle" parent="." instance=ExtResource("3_d1p5t")]
 position = Vector2(240, 128)
@@ -51,14 +71,26 @@ offset_top = 192.0
 offset_bottom = 0.0
 
 [node name="RoundContainer" parent="UI" instance=ExtResource("5_34rh1")]
+visible = false
 layout_mode = 1
-anchor_left = 0.375
+anchor_left = 0.344
 anchor_top = -3.333
 anchor_right = 0.66
 anchor_bottom = -2.625
+offset_left = -0.064003
 offset_top = -0.0159912
-offset_right = 0.0399933
-offset_bottom = 1.52588e-05
+offset_right = -0.960007
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MessageContainer" parent="UI" instance=ExtResource("6_vg687")]
+visible = false
+layout_mode = 1
+offset_left = 88.0
+offset_top = -160.0
+offset_right = 120.128
+offset_bottom = -134.816
 grow_horizontal = 1
 grow_vertical = 1
 

@@ -25,14 +25,33 @@ extends CharacterBody2D
 @export var speed := 20.0
 
 @onready var set_target_timer: TimerWithRandomRange = $SetTargetTimer
+@onready var shoot_timer: Timer = $ShootTimer
 
 var _duck: Duck
-var _target_pos: Vector2
+var _target_pos := position
 
 func _ready() -> void:
+	Events.duck_flew_in.connect(_start)
+	Events.duck_fly_out.connect(_stop)
+	
+	shoot_timer.timeout.connect(_shoot)
 	set_target_timer.timeout.connect(_target_timer_timeout)
-	_get_duck()
+
+
+func _start() -> void:
+	_duck = get_tree().get_first_node_in_group("ducks") as Duck
+	await get_tree().create_timer(0.25).timeout
 	_set_target_pos()
+	shoot_timer.start()
+	set_target_timer.start()
+
+func _stop() -> void:
+	_duck = null
+	shoot_timer.stop()
+	set_target_timer.stop()
+	velocity = Vector2.ZERO
+	_target_pos = position
+
 
 func _physics_process(_delta) -> void:
 	if position.distance_to(_target_pos) > 5:
@@ -43,18 +62,20 @@ func _target_timer_timeout() -> void:
 	_set_target_pos()
 
 
-
-func _get_duck() -> void:
-	_duck = get_tree().get_first_node_in_group("ducks") as Duck
+func _shoot() -> void:
+#	if _duck == null:
+#		return
+	var hit = randf() > 0.9
+	if hit:
+		_stop()
+	Events.shot.emit(hit)
 
 
 func _set_target_pos() -> void:
-	if _duck == null:
-		_get_duck()
-		if _duck == null:
-			_target_pos = position
-			velocity = Vector2.ZERO
-			return
+#	if _duck == null:
+#		_target_pos = position
+#		velocity = Vector2.ZERO
+#		return
 		
 	if _duck.velocity == Vector2.ZERO:
 		_target_pos = _duck.position

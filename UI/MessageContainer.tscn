@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://180olvqmq7yb"]
+
+[ext_resource type="Theme" uid="uid://brn6w6d4124th" path="res://Theme/default_theme.tres" id="1_gs1wp"]
+[ext_resource type="Script" path="res://UI/MessageContainer.gd" id="2_4pj43"]
+
+[node name="MessageContainer" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.187
+anchor_bottom = 0.142
+offset_right = 0.127998
+offset_bottom = -0.0800018
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_gs1wp")
+script = ExtResource("2_4pj43")
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = 6
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1

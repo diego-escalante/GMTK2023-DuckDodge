@@ -148,7 +148,7 @@ speed = 99.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_j5jx1")
-animation = &"shot"
+animation = &"up"
 autoplay = "up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

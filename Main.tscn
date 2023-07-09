@@ -63,7 +63,7 @@ scale = Vector2(8, 1)
 collision_layer = 8
 
 [node name="UI" parent="." instance=ExtResource("4_u7oqb")]
-z_index = 2
+z_index = 4
 texture_filter = 1
 anchors_preset = 15
 anchor_bottom = 1.0
@@ -124,25 +124,25 @@ position = Vector2(208, 130)
 texture = ExtResource("8_b438l")
 
 [node name="GrassAndDirt" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 3
 texture_filter = 1
 position = Vector2(32, 192)
 texture = ExtResource("9_v74ao")
 
 [node name="GrassAndDirt2" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 3
 texture_filter = 1
 position = Vector2(96, 192)
 texture = ExtResource("9_v74ao")
 
 [node name="GrassAndDirt3" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 3
 texture_filter = 1
 position = Vector2(160, 192)
 texture = ExtResource("9_v74ao")
 
 [node name="GrassAndDirt4" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 3
 texture_filter = 1
 position = Vector2(224, 192)
 texture = ExtResource("9_v74ao")

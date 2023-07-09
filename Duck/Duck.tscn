@@ -143,7 +143,6 @@ size = Vector2(32, 32)
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("2_tv0cu")
-speed = 99.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

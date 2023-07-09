@@ -4,7 +4,7 @@ class_name Duck
 enum State {FLYING_IN, FLYING, FLYING_OUT, SHOT, FALLING}
 
 @export var vel := Vector2.RIGHT
-@export var speed := 100.0
+@export var speed := 112.0
 
 @onready var animated_sprite := $AnimatedSprite2D as AnimatedSprite2D
 @onready var quack_timer := $QuackTimer as Timer
@@ -36,7 +36,6 @@ func _physics_process(_delta):
 			Events.duck_fell.emit()
 			AudioPlayer.stop_sound(AudioPlayer.FALL)
 			AudioPlayer.play_sound(AudioPlayer.THUD)
-			# STOP FALL SOUND
 			queue_free()
 		return
 	

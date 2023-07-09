@@ -5,7 +5,6 @@ extends CharacterBody2D
 
 # Basic reticle movement: Move in a straight light to the duck.
 # Advanced reticle movement: Predict where the duck will be and move there.
-# Extra Advanced reticle movement: Quickly move into position to where the duck will be.
 # Random reticle movement to break up predictable movement:
 #  * Stop moving for a moment.
 #  * Move to a random location.
@@ -42,7 +41,7 @@ extends CharacterBody2D
 @onready var shoot_timer: Timer = $ShootTimer
 
 var _duck: Duck
-var _target_pos := position
+var _target_pos: Vector2
 var _current_speed := speed
 
 enum TargetLogic {NONE, RANDOM, CURRENT, PREDICTED}
@@ -65,6 +64,8 @@ func _choose_target_logic() -> TargetLogic:
 	return TargetLogic.PREDICTED
 
 func _ready() -> void:
+	_target_pos = position
+	
 	Events.duck_flew_in.connect(_start)
 	Events.duck_fly_out.connect(_stop)
 	
@@ -79,12 +80,15 @@ func _ready() -> void:
 func _start() -> void:
 	_duck = get_tree().get_first_node_in_group("ducks") as Duck
 	await get_tree().create_timer(0.25).timeout
+	position = Vector2(128, 160)
+	visible = true
 	_set_target_pos()
 	shoot_timer.start()
 	set_target_timer.start()
 
 func _stop() -> void:
 	_duck = null
+	visible = false
 	shoot_timer.stop()
 	set_target_timer.stop()
 	velocity = Vector2.ZERO

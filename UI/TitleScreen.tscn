@@ -12,6 +12,7 @@ shader = ExtResource("5_6mqx5")
 shader_parameter/scanline_count = 125.0
 
 [node name="TitleScreen" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

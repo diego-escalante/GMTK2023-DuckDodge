@@ -22,13 +22,47 @@ extends CharacterBody2D
 #  * Shoot cooldown: How quickly can the reticle attempt to shoot after a previous attempt? CD decreases over rounds. 
 #  * accuracy 0-1: Low accuracy means shooting outside of the duck's area and not shooting inside the duck's area when it is able to make an attempt. Think about it as a roll to see if it happens. 
 
-@export var speed := 20.0
+@export var speed := 20.0						# The speed of the target.
+@export var speed_delta := 10.0					# How much can the speed vary?
+@export var set_target_interval := 0.5			# How often should a new target be chosen?
+@export var set_target_inverval_delta := 0.2 	# How much can the interval to chose a new target vary?
+@export var target_radius := 128				# How far can the target position be from the optimal desired position?
+@export var target_hit_distance := 16			# How close to the duck in order to hit it with a shot?
+@export var shoot_radius := 128					# How close to the duck before attempting to shoot? (Not guaranteed to be ON the duck)
+@export var shoot_accuracy := 0.75				# How likely is a shot to land? How likely is there a missed chance for a shot?
+@export var shoot_interval := 0.5				# How often should we attempt to shoot?
+
+@export var no_new_target_position_weight := 1
+@export var random_target_position_weight := 2
+@export var current_target_position_weight := 2
+@export var predicted_target_position_weight := 2
+
 
 @onready var set_target_timer: TimerWithRandomRange = $SetTargetTimer
 @onready var shoot_timer: Timer = $ShootTimer
 
 var _duck: Duck
 var _target_pos := position
+var _current_speed := speed
+
+enum TargetLogic {NONE, RANDOM, CURRENT, PREDICTED}
+
+func _choose_target_logic() -> TargetLogic:
+	var total := no_new_target_position_weight + random_target_position_weight + current_target_position_weight + predicted_target_position_weight
+	var val := randf_range(0, total)
+	
+	if val < no_new_target_position_weight:
+		return TargetLogic.NONE
+	
+	val -= no_new_target_position_weight
+	if val < random_target_position_weight:
+		return TargetLogic.RANDOM
+		
+	val -= random_target_position_weight
+	if val < current_target_position_weight:
+		return TargetLogic.CURRENT
+		
+	return TargetLogic.PREDICTED
 
 func _ready() -> void:
 	Events.duck_flew_in.connect(_start)
@@ -36,6 +70,10 @@ func _ready() -> void:
 	
 	shoot_timer.timeout.connect(_shoot)
 	set_target_timer.timeout.connect(_target_timer_timeout)
+	
+	await get_tree().root.ready
+	set_target_timer.set_new_wait_time(set_target_interval, set_target_inverval_delta)
+	shoot_timer.wait_time = shoot_interval
 
 
 func _start() -> void:
@@ -55,7 +93,10 @@ func _stop() -> void:
 
 func _physics_process(_delta) -> void:
 	if position.distance_to(_target_pos) > 5:
+		velocity = position.direction_to(_target_pos) * _current_speed
 		move_and_slide()
+	else:
+		position = _target_pos
 
 
 func _target_timer_timeout() -> void:
@@ -63,59 +104,57 @@ func _target_timer_timeout() -> void:
 
 
 func _shoot() -> void:
-#	if _duck == null:
-#		return
-	var hit = randf() > 0.5
-	AudioPlayer.play_sound(AudioPlayer.ZAP)
-	if hit:
-		_stop()
-	Events.shot.emit(hit)
+	var within_shoot_radius := position.distance_to(_duck.position) < shoot_radius
+	var do_a_shoot := (within_shoot_radius and randf() < shoot_accuracy) or (!within_shoot_radius and randf() > shoot_accuracy)
+	
+	if do_a_shoot:
+		var hit = position.distance_to(_duck.position) < target_hit_distance
+		AudioPlayer.play_sound(AudioPlayer.ZAP)
+		if hit:
+			_stop()
+		Events.shot.emit(hit)
 
 
 func _set_target_pos() -> void:
-#	if _duck == null:
-#		_target_pos = position
-#		velocity = Vector2.ZERO
-#		return
-		
-	if _duck.velocity == Vector2.ZERO:
-		_target_pos = _duck.position
-		velocity = position.direction_to(_target_pos) * speed
-		return 
-		
-	var interception_result := _interception_direction(_duck.position, position, _duck.velocity, speed)
-	if (interception_result[0]):
-		_target_pos = interception_result[1]
-	else:
-		_target_pos = _duck.position
+	_current_speed = speed + randf_range(-speed_delta, speed_delta)
 	
-	velocity = position.direction_to(_target_pos) * speed
-
-
-func _basic_follow() -> void:
-	velocity = position.direction_to(_target_pos) * speed
-	move_and_slide()
+	# Choose a targeting strategy
+	var targeting_logic := _choose_target_logic()
+	
+	# Get ideal target position based on strategy.
+	match targeting_logic:
+		TargetLogic.NONE:
+			_target_pos = position
+		TargetLogic.RANDOM:
+			_target_pos = Vector2(randi_range(16, 240), randi_range(16, 128))
+		TargetLogic.CURRENT:
+			_target_pos = _duck.position
+		TargetLogic.PREDICTED:
+			if _duck.velocity == Vector2.ZERO:
+				_target_pos = _duck.position
+			else:
+				var interception_result := _interception_direction(_duck.position, position, _duck.velocity, _current_speed)
+				if (interception_result[0]):
+					_target_pos = interception_result[1]
+				else:
+					_target_pos = _duck.position
+					
+	# Move the target to a random location within target_radius
+	_target_pos += randv_circle(0, target_radius)
+	
+	# Target position could be outside of the play area. Clamp it.
+	_target_pos = Vector2(clamp(_target_pos.x, 16, 240), clamp(_target_pos.y, 16, 128))
+	
+# https://www.reddit.com/r/godot/comments/vjge0n/could_anyone_share_some_code_for_finding_a/idjqb13/
+func randv_circle(min_radius := 1.0, max_radius := 1.0) -> Vector2:
+	var r2_max := max_radius * max_radius
+	var r2_min := min_radius * min_radius
+	var r := sqrt(randf() * (r2_max - r2_min) + r2_min)
+	var t := randf() * TAU
+	return Vector2(r, 0).rotated(t)
 
 
 # Based on jean-gobert de coster's video on predictive aim: https://youtu.be/2zVwug_agr0
-func _predict_follow() -> void:
-	var interception_result := _interception_direction(_target_pos, position, _duck.velocity, speed)
-	if interception_result[0]:
-		velocity = interception_result[1] * speed
-		move_and_slide()
-	else:
-		# Fall back to basic follow if it is impossible to intercept.
-		_basic_follow()
-
-
-# Returns an array with the number of valid roots, and the quadratic roots.
-func _solve_quadratic(a: float, b: float, c: float) -> Array:
-	var discriminant := b * b - 4 * a * c
-	if discriminant < 0:
-		return [0, INF, -INF]
-	return [2 if discriminant > 0 else 1, (-b + sqrt(discriminant)) / (2 * a), (-b - sqrt(discriminant)) / (2 * a)]
-
-
 # Returns an array with a bool indicating if a valid solution was found, and if so, the direction it found.
 func _interception_direction(a: Vector2, b: Vector2, vA: Vector2, sB: float) -> Array:
 	var aToB := b - a
@@ -131,3 +170,11 @@ func _interception_direction(a: Vector2, b: Vector2, vA: Vector2, sB: float) -> 
 	var t := dA / sB
 	var c = a + vA * t
 	return [true, c]
+
+
+# Returns an array with the number of valid roots, and the quadratic roots.
+func _solve_quadratic(a: float, b: float, c: float) -> Array:
+	var discriminant := b * b - 4 * a * c
+	if discriminant < 0:
+		return [0, INF, -INF]
+	return [2 if discriminant > 0 else 1, (-b + sqrt(discriminant)) / (2 * a), (-b - sqrt(discriminant)) / (2 * a)]

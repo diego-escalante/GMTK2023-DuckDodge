@@ -7,9 +7,9 @@
 [ext_resource type="Shader" path="res://crt.gdshader" id="5_6mqx5"]
 [ext_resource type="Script" path="res://UI/TopScoreLabel.gd" id="5_k5a62"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e585s"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqswl"]
 shader = ExtResource("5_6mqx5")
-shader_parameter/scanline_count = 125.0
+shader_parameter/scanline_count = 790.0
 
 [node name="TitleScreen" type="Control"]
 texture_filter = 1
@@ -113,7 +113,8 @@ position = Vector2(128, 120)
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer"]
-material = SubResource("ShaderMaterial_e585s")
+texture_filter = 1
+material = SubResource("ShaderMaterial_nqswl")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -12,7 +12,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4t4cd"]
 shader = ExtResource("6_2vmvu")
-shader_parameter/scanline_count = 125.0
+shader_parameter/scanline_count = 790.0
 
 [node name="Main" type="Node"]
 

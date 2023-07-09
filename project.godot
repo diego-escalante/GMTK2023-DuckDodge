@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Events="*res://Events.gd"
 TopScore="*res://Utils/TopScore.gd"
+AudioPlayer="*res://Audio/AudioPlayer.tscn"
 
 [display]
 

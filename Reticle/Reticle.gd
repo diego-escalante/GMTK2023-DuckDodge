@@ -65,7 +65,8 @@ func _target_timer_timeout() -> void:
 func _shoot() -> void:
 #	if _duck == null:
 #		return
-	var hit = randf() > 0.9
+	var hit = randf() > 0.5
+	AudioPlayer.play_sound(AudioPlayer.ZAP)
 	if hit:
 		_stop()
 	Events.shot.emit(hit)

@@ -157,3 +157,10 @@ shape = SubResource("RectangleShape2D_cm13p")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
+
+[node name="QuackTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="FlapTimer" type="Timer" parent="."]
+wait_time = 0.125
+autostart = true

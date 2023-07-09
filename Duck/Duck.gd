@@ -7,15 +7,24 @@ enum State {FLYING_IN, FLYING, FLYING_OUT, SHOT, FALLING}
 @export var speed := 100.0
 
 @onready var animated_sprite := $AnimatedSprite2D as AnimatedSprite2D
+@onready var quack_timer := $QuackTimer as Timer
+@onready var flap_timer := $FlapTimer as Timer
 
 var state := State.FLYING_IN
+var last_flap_low := false
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color("4696ff"))
 	Events.shot.connect(_shot)
 	Events.duck_fly_out.connect(_fly_out)
+	quack_timer.timeout.connect(func(): AudioPlayer.play_sound(AudioPlayer.QUACK))
+	flap_timer.timeout.connect(_flap)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_flew_out)
-
+	
+	
+func _flap():
+	last_flap_low = !last_flap_low
+	AudioPlayer.play_sound(AudioPlayer.FLAP_HIGH if last_flap_low else AudioPlayer.FLAP_LOW)
 
 func _physics_process(_delta):
 	if state == State.SHOT:
@@ -25,6 +34,9 @@ func _physics_process(_delta):
 		move_and_slide()
 		if position.y > 160:
 			Events.duck_fell.emit()
+			AudioPlayer.stop_sound(AudioPlayer.FALL)
+			AudioPlayer.play_sound(AudioPlayer.THUD)
+			# STOP FALL SOUND
 			queue_free()
 		return
 	
@@ -71,11 +83,14 @@ func _shot(hit: bool) -> void:
 	if not hit:
 		return
 	state = State.SHOT
+	quack_timer.stop()
+	flap_timer.stop()
 	Events.shot.disconnect(_shot)
 	Events.duck_fly_out.disconnect(_fly_out)
 	animated_sprite.set_animation("shot")
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.4).timeout
 	state = State.FALLING
+	AudioPlayer.play_sound(AudioPlayer.FALL)
 	animated_sprite.set_animation("fall")
 	set_collision_mask(0)
 	velocity = Vector2.DOWN * speed

@@ -11,11 +11,13 @@ This game was made in 48 hours for the GMTK Game Jam in July 2023. The theme of 
 ## Links
 * [Duck Dodge on itch.io](https://diego-escalante.itch.io/duck-dodge): Play the game directly on your browser here.
 * [Jam Submission Page](https://itch.io/jam/gmtk-2023/rate/2151873): Feedback on the game by other participants can be found here.
+* 
 
 ## Tools Used
 * [Godot](https://godotengine.org/) as the game engine.
 * [Aesprite](https://www.aseprite.org/) for graphics.
 * [Chiptone](https://sfbgames.itch.io/chiptone) and [Audacity](https://www.audacityteam.org/) for sound effects.
+* [Development Timelapse](https://youtu.be/l8vn8NMDTbE): A timelapse video of the game being made during the jam.
 
 ## Setting Up the Project Locally
 1. Make sure you have [Godot 3.1](https://godotengine.org/download) installed, as that is the version of the engine that was used for this game. No need to get the .NET version of Godot, as this project purely uses GDScript.
